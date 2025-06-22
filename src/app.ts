@@ -1,13 +1,18 @@
-import express from 'express';
+import express, { Application, Request, Response } from 'express';
 import identityRoutes from './routes/identityRoutes';
 import sequelize from './config/database';
 
-const app = express();
+const app: Application = express();
 
 app.use(express.json());
-app.use('v1/api', identityRoutes);
 
-const PORT = process.env.PORT || 3000;
+app.get('/health', (req: Request, res: Response) => {
+  res.status(200).json({ status: 'OK', message: 'Server is healthy' });
+});
+
+app.use('/v1/api', identityRoutes);
+
+const PORT: number = Number(process.env.PORT) || 3000;
 
 sequelize.sync().then(() => {
   app.listen(PORT, () => {
