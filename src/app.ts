@@ -5,7 +5,7 @@ import sequelize from './config/database';
 const app = express();
 
 app.use(express.json());
-app.use('/api', identityRoutes);
+app.use('v1/api', identityRoutes);
 
 const PORT = process.env.PORT || 3000;
 
